@@ -1,7 +1,9 @@
 package dao.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 import dao.UserDAO;
@@ -13,6 +15,10 @@ public class UserDAOImpl implements UserDAO {
 	+ " (ui_num, ui_name, ui_id, ui_pwd, ui_email)"
 	+ " values(seq_ui_num.nextval,?,?,?,?)";
 
+	
+	private String selectUserByID = "select ui_id, ui_pwd from user_info where ui_id=?";
+	
+	
 	@Override
 	public int insertUser(Map<String, String> user) {
 	try {
@@ -26,6 +32,25 @@ public class UserDAOImpl implements UserDAO {
 		e.printStackTrace();
 	}
 		return 0;
+	}
+
+	@Override
+	public Map<String,String> selectUserByID(Map<String, String> login) {
+		try {
+			PreparedStatement ps = DBCon.getCon().prepareStatement(selectUserByID);
+			ps.setString(1, login.get("uiId"));
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Map<String,String> user = new HashMap<>();
+				user.put("uiId", rs.getString("ui_id"));
+				user.put("uiPwd", rs.getString("ui_pwd"));
+				return user;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

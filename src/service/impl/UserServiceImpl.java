@@ -15,5 +15,15 @@ public class UserServiceImpl implements UserService {
 		return udao.insertUser(user);
 	}
 
-	
+	@Override
+	public boolean loginUser(Map<String, String> login) {
+
+		if (udao.selectUserByID(login).get("uiId").equals(login.get("uiId"))) {
+			if(udao.selectUserByID(login).get("uiPwd").equals(login.get("uiPwd"))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

@@ -46,6 +46,22 @@ public class UserServlet extends HttpServlet {
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/views/msg/result");
 			rd.forward(request, response);
+			
+		} else if ("login".equals(cmd)) {
+			String uiId = request.getParameter("ui_id");
+			String uiPwd = request.getParameter("ui_pwd");
+			Map<String, String> login = new HashMap<>();
+			login.put("uiId", uiId);
+			login.put("uiPwd", uiPwd);
+			request.setAttribute("msg", "로그인에 실패하였습니다.");
+			request.setAttribute("url", "/");
+			if(us.loginUser(login)) {
+				request.setAttribute("msg", "로그인에 성공하였습니다.");
+				request.setAttribute("url", "/");
+			}
+			RequestDispatcher rd = request.getRequestDispatcher("/views/msg/result");
+			rd.forward(request, response);
+			
 		}
 	}
 

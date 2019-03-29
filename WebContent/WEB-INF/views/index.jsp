@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form method="post" action="/user">
 <table border="1">
 <tr>
 <th> 아이디</th>
@@ -18,7 +19,13 @@
 <td><input type="password" name="ui_pwd" id="ui_pwd">
 </tr>
 
+<tr>
+<td colspan="2"><button>로그인</button>
+</tr>
 </table>
+<input type="hidden" name="cmd" value="login">
 <a href="/views/user/join"> 회원가입</a>
+
+</form>
 </body>
 </html>
