@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script>
+	function goAjax(){}
+	var xhr = new XMLHttpRequest(); // 0 전화기 만들기.
+		xhr.open('Get', '/ajax',false); //끝나야 1. 'Get','/ajax' 전화번호를 쓰고 전화를 거는 단계.
+		xhr.onreadystatechange = function() { //send를 보내면 2 > 3 > 4가 찍히고 4가 됐을때 콘솔창에 뜸
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				console.log(xhr.response);
+			}
+		}
+		xhr.send();
+		alert(1);
+		}
+	</script>
+<form method="get" action="/ajax">
+<button>전송</button>
+</form>
+<button onclick="goAjax()">GoAJAX</button>
+</body>
+</html>

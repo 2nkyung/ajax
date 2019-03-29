@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+var arr = []; //리스트
+var m = {}; //맵
+
+for(var i=0; i<=2; i++){
+m['key'] = i;
+arr[i] = m;
+}
+console.log(arr);
+var jsonStr = JSON.stringify(arr);
+console.log(jsonStr);
+
+</script>
+</body>
+</html>
