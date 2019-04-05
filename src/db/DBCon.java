@@ -8,32 +8,30 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBCon {
-
 	private static final String URL;
-	private static final String Id;
-	private static final String PASSWORD;
-	private static final String DRIVER;
+	private static final String USER;
+	private static final String PWD;
+	private static final String CLASS_NAME;
 	private static Connection con;
-
 	static {
-		InputStream is = DBCon.class.getResourceAsStream("/config/db.properties");
 		Properties prop = new Properties();
+		InputStream is = DBCon.class.getResourceAsStream("/config/db.properties");
 		try {
 			prop.load(is);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		URL = prop.getProperty("url");
-		Id = prop.getProperty("id");
-		PASSWORD = prop.getProperty("pwd");
-		DRIVER = prop.getProperty("classname");
+		URL=prop.getProperty("url");
+		USER=prop.getProperty("user");
+		PWD=prop.getProperty("pwd");
+		CLASS_NAME=prop.getProperty("className");
 	}
-
+	
 	public static Connection getCon() {
-		if (con == null) {
+		if(con==null) {
 			try {
-				Class.forName(DRIVER);
-				con = DriverManager.getConnection(URL, Id, PASSWORD);
+				Class.forName(CLASS_NAME);
+				con = DriverManager.getConnection(URL, USER,PWD);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -44,13 +42,13 @@ public class DBCon {
 		}
 		return con;
 	}
-
+	
 	public static void close() {
-		if (con != null) {
+		if(con!=null) {
 			try {
-				if (!con.isClosed()) {
-				con.close();
-			}
+				if(!con.isClosed()) {
+					con.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -58,7 +56,4 @@ public class DBCon {
 		}
 		con = null;
 	}
-	
-	
-	
 }
