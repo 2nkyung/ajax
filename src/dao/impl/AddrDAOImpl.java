@@ -12,11 +12,8 @@ import dao.AddrDAO;
 import db.DBCon;
 
 public class AddrDAOImpl implements AddrDAO {
-
-	private static String selectAddrListSql = "select * from\r\n" + "(select rownum as rown, addr.*\r\n"
-			+ "from (select * from address $where$ order by ad_num ) addr\r\n" + "where rownum <= ?)\r\n"
-			+ "where rown >= ?";
-
+	private static String selectAddrListSql = "select * from (\r\n" + "select rownum as rown, addr.* from\r\n"
+			+ "(select * from address $where$ order by ad_num) addr\r\n" + "where rownum<=?)\r\n" + "where rown>=?";
 	private static String selectAddrCount = "select count(1) from address $where$";
 
 	@Override
@@ -25,18 +22,20 @@ public class AddrDAOImpl implements AddrDAO {
 		String sql = selectAddrListSql.replace("$where$", "");
 		try {
 			if (adDong != null) {
-				sql = selectAddrListSql.replace("$where$", " and ad_dong like '%' || ? || '%'");
+				sql = selectAddrListSql.replace("$where$", " where ad_dong like '%' || ? || '%'");
 			}
-			PreparedStatement ps = DBCon.getCon().prepareStatement(selectAddrListSql);
+			PreparedStatement ps = DBCon.getCon().prepareStatement(sql);
 			ps.setString(1, addr.get("lNum"));
 			ps.setString(2, addr.get("sNum"));
 			if (adDong != null) {
-				ps.setString(3, adDong);
+				ps.setString(1, adDong);
+				ps.setString(2, addr.get("lNum"));
+				ps.setString(3, addr.get("sNum"));
 			}
 			ResultSet rs = ps.executeQuery();
-			List<Map<String, String>> addrList = new ArrayList();
+			List<Map<String, String>> addrList = new ArrayList<>();
 			while (rs.next()) {
-				Map<String, String> address = new HashMap();
+				Map<String, String> address = new HashMap<>();
 				address.put("ad_num", rs.getString("ad_num"));
 				address.put("ad_sido", rs.getString("ad_sido"));
 				address.put("ad_gugun", rs.getString("ad_gugun"));
@@ -51,7 +50,6 @@ public class AddrDAOImpl implements AddrDAO {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
 	@Override
@@ -62,22 +60,18 @@ public class AddrDAOImpl implements AddrDAO {
 			if (adDong != null) {
 				sql = selectAddrCount.replace("$where$", " where ad_dong like '%' || ? || '%'");
 			}
-			PreparedStatement ps = DBCon.getCon().prepareStatement(selectAddrCount);
+			PreparedStatement ps = DBCon.getCon().prepareStatement(sql);
 			if (adDong != null) {
 				ps.setString(1, adDong);
 			}
 			ResultSet rs = ps.executeQuery();
-			List<Map<String, String>> addrList = new ArrayList<>();
 			while (rs.next()) {
 				return rs.getInt(1);
-
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
-
 	}
 
 }
