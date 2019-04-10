@@ -3,7 +3,6 @@ package servlet;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +11,7 @@ import service.AddrService;
 import service.impl.AddrServiceImpl;
 import utils.Command;
 
-@WebServlet("/AddrServlet1")
+
 public class AddrServlet1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AddrService as = new AddrServiceImpl();
@@ -25,6 +24,9 @@ public class AddrServlet1 extends HttpServlet {
 			as.selectAddrList(request);
 			Command.goPage(request, response, "/views/addr1/list");
 			
+		}else if("view".equals(cmd)) {
+			as.selectAddr(request);
+			Command.goPage(request, response, "/views/addr1/view");
 		}
 	}
 

@@ -15,6 +15,7 @@ public class AddrDAOImpl implements AddrDAO {
 	private static String selectAddrListSql = "select * from (\r\n" + "select rownum as rown, addr.* from\r\n"
 			+ "(select * from address $where$ order by ad_num) addr\r\n" + "where rownum<=?)\r\n" + "where rown>=?";
 	private static String selectAddrCount = "select count(1) from address $where$";
+	private static String selectAddr = "select * from address where 1=1 and ad_num=?";
 
 	@Override
 	public List<Map<String, String>> selectAddrList(Map<String, String> addr) {
@@ -72,6 +73,33 @@ public class AddrDAOImpl implements AddrDAO {
 			e.printStackTrace();
 		}
 		return 0;
+<<<<<<< HEAD
+=======
+	}
+
+	@Override
+	public Map<String, String> selectAddr(Map<String, String> addr) {
+		try {
+			PreparedStatement ps = DBCon.getCon().prepareStatement(selectAddr);
+			ps.setString(1, addr.get("ad_num"));
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Map<String, String> address = new HashMap<>();
+				address.put("ad_num", rs.getString("ad_num"));
+				address.put("ad_sido", rs.getString("ad_sido"));
+				address.put("ad_gugun", rs.getString("ad_gugun"));
+				address.put("ad_dong", rs.getString("ad_dong"));
+				address.put("ad_lee", rs.getString("ad_lee"));
+				address.put("ad_bunji", rs.getString("ad_bunji"));
+				address.put("ad_ho", rs.getString("ad_ho"));
+				return address;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+>>>>>>> branch 'master' of https://github.com/2nkyung/ajax.git
 	}
 
 }
