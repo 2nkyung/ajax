@@ -53,6 +53,26 @@ function search(){
 		}
 		xhr.send();
 	}
+	
+	function closeTable() {
+		document.querySelector('#addrTable').style.display = 'none';
+	}
+	function updateAddr(){
+		var inputs = document.querySelectorAll('input[id]');
+		var params ={};
+		for(var i=0; i<inputs.length;i++){
+			var input = inputs[i];
+			params[input.id]=input.value;
+		}
+		xhr.open('POST','/addr2');
+		xhr.setRequestHeader('Content-Type','application/json');
+		xhr.onreadystatechange=function(){
+			
+		}
+		xhr.send(JSON.stringify(params));
+		alert(JSON.stringify(params));
+		
+	}
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET','/addr2/list?pageCount=${param.pageCount}&page=${param.page}&ad_dong=${param.ad_dong}');
 	xhr.onreadystatechange = function(){

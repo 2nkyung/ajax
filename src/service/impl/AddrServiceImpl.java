@@ -53,6 +53,7 @@ public class AddrServiceImpl implements AddrService {
 		request.setAttribute("lBlock", lBlock);
 		request.setAttribute("fBlock", fBlock);
 		request.setAttribute("totalPageCnt", totalPageCnt);
+		request.setAttribute("asList",adao.selectAdSido());
 		return addrList;
 	}
 
@@ -76,6 +77,12 @@ public class AddrServiceImpl implements AddrService {
 		request.setAttribute("page", page);
 		request.setAttribute("pageCount", pageCount);
 		request.setAttribute("addr", adao.selectAddr(paramMap));
+	}
+
+	@Override
+	public List<String> selectAdSido() {
+		// TODO Auto-generated method stub
+		return adao.selectAdSido();
 	}
 
 }

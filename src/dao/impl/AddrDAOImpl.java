@@ -1,5 +1,6 @@
 package dao.impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ public class AddrDAOImpl implements AddrDAO {
 			+ "(select * from address $where$ order by ad_num) addr\r\n" + "where rownum<=?)\r\n" + "where rown>=?";
 	private static String selectAddrCount = "select count(1) from address $where$";
 	private static String selectAddr = "select * from address where 1=1 and ad_num=?";
+	private static String selectAdSido = "select distinct ad_sido from address";
 
 	@Override
 	public List<Map<String, String>> selectAddrList(Map<String, String> addr) {
@@ -93,6 +95,23 @@ public class AddrDAOImpl implements AddrDAO {
 				address.put("ad_ho", rs.getString("ad_ho"));
 				return address;
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBCon.close();
+		}
+		return null;
+	}
+
+	@Override
+	public List<String> selectAdSido() {
+		try (Connection con = DBCon.getCon(); PreparedStatement ps = con.prepareStatement(selectAdSido)) {
+			ResultSet rs = ps.executeQuery();
+			List<String> adSidoList = new ArrayList<>();
+			while (rs.next()) {
+				adSidoList.add(rs.getString("ad_sido"));
+			}
+			return adSidoList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

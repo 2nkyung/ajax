@@ -21,32 +21,36 @@ public class DBCon {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		URL=prop.getProperty("url");
-		USER=prop.getProperty("user");
-		PWD=prop.getProperty("pwd");
-		CLASS_NAME=prop.getProperty("className");
+		URL = prop.getProperty("url");
+		USER = prop.getProperty("user");
+		PWD = prop.getProperty("pwd");
+		CLASS_NAME = prop.getProperty("className");
 	}
-	
+
 	public static Connection getCon() {
-		if(con==null) {
-			try {
-				Class.forName(CLASS_NAME);
-				con = DriverManager.getConnection(URL, USER,PWD);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			if (con == null || con.isClosed()) {
+				try {
+					Class.forName(CLASS_NAME);
+					con = DriverManager.getConnection(URL, USER, PWD);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return con;
 	}
-	
+
 	public static void close() {
-		if(con!=null) {
+		if (con != null) {
 			try {
-				if(!con.isClosed()) {
+				if (!con.isClosed()) {
 					con.close();
 				}
 			} catch (SQLException e) {

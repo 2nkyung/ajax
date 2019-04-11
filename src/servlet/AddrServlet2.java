@@ -38,7 +38,9 @@ public class AddrServlet2 extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		Map<String,String> param = Command.fromJSON(request);
+		System.out.println(param);
+		
 	}
 
 }

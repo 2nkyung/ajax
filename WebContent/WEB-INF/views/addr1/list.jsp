@@ -16,6 +16,7 @@
 		location.href="/addr/list?pageCount=${pageCount}&ad_dong=" + ad_dong;
 	}
 </script>
+${asList }
 <label for="ad_dong">읍면동 : </label><input type="text" name="ad_dong" id="ad_dong" value="${param.ad_dong}">
 <button onclick="search()">검색</button>
 <select name="pageCount" onchange="changePageCount(this)">
