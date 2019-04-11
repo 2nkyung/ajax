@@ -16,7 +16,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 public class UploadFile {
 	private static final String TMP_PATH = System.getProperty("java.io.tmpdir");
-	private static final String TARGET_PATH = "D:\\study\\workspace\\git\\ajax\\WebContent\\WEB-INF\\addr";
+	private static final String TARGET_PATH = "C:\\Users\\92dai\\git\\ajax\\WebContent\\WEB-INF\\addr";
 	private static final int MEMORY_SIZE = 10 * 1024 * 1024;
 	private static final int TOTAL_SIZE = 1000 * 1024 * 1024; // 1000메가
 	private static final int FILE_SIZE = 1000 * 1024 * 1024; // 1000메가
