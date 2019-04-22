@@ -53,7 +53,9 @@ public class AddrServiceImpl implements AddrService {
 		request.setAttribute("lBlock", lBlock);
 		request.setAttribute("fBlock", fBlock);
 		request.setAttribute("totalPageCnt", totalPageCnt);
-		request.setAttribute("asList",adao.selectAdSido());
+		List<String> asList = adao.selectAdSido();
+		request.setAttribute("asList",asList);
+		request.setAttribute("agList",adao.selectAdGugunList(asList.get(0)));
 		return addrList;
 	}
 

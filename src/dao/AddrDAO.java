@@ -9,4 +9,5 @@ public interface AddrDAO {
 	public int selectTotalAddrCnt(Map<String,String> addr);
 	public Map<String,String> selectAddr( Map<String,String> addr);
 	public List<String> selectAdSido();
+	public List<String> selectAdGugunList(String adSido);
 }
